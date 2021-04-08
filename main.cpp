@@ -2,16 +2,16 @@
 #include <string>
 #include <cmath>
 
-float GetOperand(std::string &Stack){
+float GetOperand(std::string &Stack) {
     std::string Number;
-    for (int i=Stack.size()-1; i>-1; i--){
-        if (Stack[i]==' '){
-            Number=Stack.substr(i+1);
-            Stack=Stack.substr(0, i);
+    for (int i = Stack.size() - 1; i > -1; i--) {
+        if (Stack[i] == ' ') {
+            Number = Stack.substr(i + 1);
+            Stack = Stack.substr(0, i);
             break;
         }
     }
-    float OperandOut=std::stof(Number);
+    float OperandOut = std::stof(Number);
     return OperandOut;
 }
 
@@ -22,6 +22,7 @@ int main() {
     std::string Stack;
     std::string StringOut;
     std::string x;
+    bool IsXInputed = false;
     for (int i = 0; i < Expression.size(); i++) {
         switch (Expression[i]) {
             case '+':
@@ -46,7 +47,7 @@ int main() {
                        (Stack[Stack.size() - 1] != '-') && (!Stack.empty())) {
                     StringOut += ' ';
                     StringOut += Stack[Stack.size() - 1];
-                    Stack = Stack.substr(Stack.size() - 1);
+                    Stack = Stack.substr(0,Stack.size() - 1);
                 }
                 Stack += '*';
                 break;
@@ -92,8 +93,11 @@ int main() {
                 StringOut += "2.718";
                 break;
             case 'x':
-                std::cout << "Please input x" << std::endl;
-                std::getline(std::cin, x);
+                if (!IsXInputed) {
+                    std::cout << "Please input x" << std::endl;
+                    std::getline(std::cin, x);
+                    IsXInputed=true;
+                }
                 StringOut += ' ';
                 StringOut += x;
                 break;
@@ -130,44 +134,44 @@ int main() {
             case ' ':
                 break;
             case '+':
-                Operand1=GetOperand(Stack);
-                Operand2=GetOperand(Stack);
-                Operand1=Operand1+Operand2;
-                Result=std::to_string(Operand1);
-                Stack+=' ';
-                Stack+=Result;
+                Operand1 = GetOperand(Stack);
+                Operand2 = GetOperand(Stack);
+                Operand1 = Operand1 + Operand2;
+                Result = std::to_string(Operand1);
+                Stack += ' ';
+                Stack += Result;
                 break;
             case '-':
-                Operand1=GetOperand(Stack);
-                Operand2=GetOperand(Stack);
-                Operand1=Operand2-Operand1;
-                Result=std::to_string(Operand1);
-                Stack+=' ';
-                Stack+=Result;
+                Operand1 = GetOperand(Stack);
+                Operand2 = GetOperand(Stack);
+                Operand1 = Operand2 - Operand1;
+                Result = std::to_string(Operand1);
+                Stack += ' ';
+                Stack += Result;
                 break;
             case '*':
-                Operand1=GetOperand(Stack);
-                Operand2=GetOperand(Stack);
-                Operand1=Operand1*Operand2;
-                Result=std::to_string(Operand1);
-                Stack+=' ';
-                Stack+=Result;
+                Operand1 = GetOperand(Stack);
+                Operand2 = GetOperand(Stack);
+                Operand1 = Operand1 * Operand2;
+                Result = std::to_string(Operand1);
+                Stack += ' ';
+                Stack += Result;
                 break;
             case '/':
-                Operand1=GetOperand(Stack);
-                Operand2=GetOperand(Stack);
-                Operand1=Operand2/Operand1;
-                Result=std::to_string(Operand1);
-                Stack+=' ';
-                Stack+=Result;
+                Operand1 = GetOperand(Stack);
+                Operand2 = GetOperand(Stack);
+                Operand1 = Operand2 / Operand1;
+                Result = std::to_string(Operand1);
+                Stack += ' ';
+                Stack += Result;
                 break;
             case '^':
-                Operand1=GetOperand(Stack);
-                Operand2=GetOperand(Stack);
-                Operand1=pow(Operand2, Operand1);
-                Result=std::to_string(Operand1);
-                Stack+=' ';
-                Stack+=Result;
+                Operand1 = GetOperand(Stack);
+                Operand2 = GetOperand(Stack);
+                Operand1 = pow(Operand2, Operand1);
+                Result = std::to_string(Operand1);
+                Stack += ' ';
+                Stack += Result;
                 break;
             default:
                 std::string Operand = StringOut.substr(i, StringOut.size() - i);
@@ -184,6 +188,6 @@ int main() {
                 break;
         }
     }
-    std::cout<<Stack.substr(1)<<std::endl;
+    std::cout << Stack.substr(1) << std::endl;
     return 0;
 }
